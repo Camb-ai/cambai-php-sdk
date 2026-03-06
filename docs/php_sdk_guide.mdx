@@ -1,4 +1,8 @@
-# PHP SDK Quickstart
+---
+title: "PHP SDK Quickstart"
+icon: "php"
+hidden: true
+---
 
 Get started with the Camb.ai PHP SDK in minutes
 
@@ -49,79 +53,61 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use Camb\Ai\CambAIClient;
 use Camb\Ai\Model\CreateStreamTTSRequestPayload;
-use Camb\Ai\Model\Languages;
 
 $client = new CambAIClient(getenv('CAMB_API_KEY'));
 
 $payload = new CreateStreamTTSRequestPayload();
 $payload->setText("Hello! Welcome to Camb.ai text-to-speech.");
 $payload->setVoiceId(147320);
-$payload->setLanguage(Languages::EN_US);
-$payload->setSpeechModel("mars-flash");
+$payload->setLanguage(CreateStreamTTSRequestPayload::LANGUAGE_EN_US);
+$payload->setSpeechModel(CreateStreamTTSRequestPayload::SPEECH_MODEL_MARS_FLASH);
 
 // Stream the audio
-$audioStream = $client->tts()->ttsTtsStreamPost($payload);
+$audioStream = $client->tts()->tts($payload);
 
 // Save to file
-file_put_contents("output.wav", $audioStream);
-echo "Audio saved to output.wav\n";
-```
-
-### Using the Helper Function
-
-You can easily wrap the file saving into a helper function:
-
-```php
-function saveStreamToFile($stream, $filename) {
-    return file_put_contents($filename, $stream);
+$file = fopen("output.wav", "w");
+if ($file) {
+    while (!$audioStream->eof()) {
+        fwrite($file, $audioStream->fread(8192));
+    }
+    fclose($file);
+    echo "Audio saved to output.wav\n";
 }
-
-// Usage:
-$stream = $client->tts()->ttsTtsStreamPost($payload);
-saveStreamToFile($stream, "output.wav");
 ```
 
 ## Choosing a Model
 
 Camb.ai offers three MARS models optimized for different use cases:
 
-### MARS Flash
-
-```php
-$payload->setSpeechModel("mars-flash");
-$stream = $client->tts()->ttsTtsStreamPost($payload);
+<CodeGroup>
+```php MARS Flash
+$payload->setSpeechModel(CreateStreamTTSRequestPayload::SPEECH_MODEL_MARS_FLASH);
+$stream = $client->tts()->tts($payload);
+// Best for: Real-time voice agents, low-latency applications
+// Sample rate: 22.05kHz
 ```
-
-**Best for**: Real-time voice agents, low-latency applications  
-**Sample rate**: 22.05kHz
-
-### MARS Pro
-
-```php
-$payload->setSpeechModel("mars-pro");
-$stream = $client->tts()->ttsTtsStreamPost($payload);
+```php MARS Pro
+$payload->setSpeechModel(CreateStreamTTSRequestPayload::SPEECH_MODEL_MARS_PRO);
+$stream = $client->tts()->tts($payload);
+// Best for: Audio production, high-quality content
+// Sample rate: 48kHz
 ```
-
-**Best for**: Audio production, high-quality content  
-**Sample rate**: 48kHz
-
-### MARS Instruct
-
-```php
-$payload->setSpeechModel("mars-instruct");
+```php MARS Instruct
+$payload->setSpeechModel(CreateStreamTTSRequestPayload::SPEECH_MODEL_MARS_INSTRUCT);
 $payload->setUserInstructions("Speak in a warm, friendly tone");
-$stream = $client->tts()->ttsTtsStreamPost($payload);
+$stream = $client->tts()->tts($payload);
+// Best for: Fine-grained control over tone and style
+// Sample rate: 22.05kHz
 ```
-
-**Best for**: Fine-grained control over tone and style  
-**Sample rate**: 22.05kHz
+</CodeGroup>
 
 ## Listing Available Voices
 
 Discover available voices for your application:
 
 ```php
-$voices = $client->voiceCloning()->listVoicesListVoicesGet();
+$voices = $client->textToVoice->listVoicesListVoicesGet();
 
 foreach ($voices as $voice) {
     echo "ID: " . $voice->getId() . ", Name: " . $voice->getVoiceName() . "\n";
@@ -130,20 +116,27 @@ foreach ($voices as $voice) {
 
 ## Language Support
 
-Camb.ai supports 140+ languages. Specify the language using the `Languages` constants:
-Languages supported by each model mentioned at [MARS Models](https://docs.camb.ai/models).
+Camb.ai supports 140+ languages. For streaming TTS, use `CreateStreamTTSRequestPayload` constants:
+
+```php
+use Camb\Ai\Model\CreateStreamTTSRequestPayload;
+
+// English (US)
+$payload->setLanguage(CreateStreamTTSRequestPayload::LANGUAGE_EN_US);
+
+// Spanish
+$payload->setLanguage(CreateStreamTTSRequestPayload::LANGUAGE_ES_ES);
+
+// French
+$payload->setLanguage(CreateStreamTTSRequestPayload::LANGUAGE_FR_FR);
+```
+
+For standard TTS, use `Languages` constants:
 
 ```php
 use Camb\Ai\Model\Languages;
 
-// English (US)
 $payload->setLanguage(Languages::EN_US);
-
-// Spanish
-$payload->setLanguage(Languages::ES_ES);
-
-// French
-$payload->setLanguage(Languages::FR_FR);
 ```
 
 ## Error Handling
@@ -152,7 +145,7 @@ Handle common errors gracefully:
 
 ```php
 try {
-    $stream = $client->tts()->ttsTtsStreamPost($payload);
+    $stream = $client->tts()->tts($payload);
 } catch (Exception $e) {
     echo "Error generating speech: " . $e->getMessage() . "\n";
 }
@@ -173,12 +166,26 @@ $basetenProvider = new BasetenTtsProvider("YOUR_BASETEN_API_KEY", "YOUR_BASETEN_
 $client->setTtsProvider($basetenProvider);
 ```
 
+---
+
 ## Next Steps
 
-| | |
-| --- | --- |
-| **🎙️ Voice Agents** <br> Build real-time voice agents with Pipecat <br> [Learn more](/tutorials/pipecat) | **🔗 LiveKit Integration** <br> Create voice agents with LiveKit <br> [Learn more](/tutorials/livekit) |
-| **📄 API Reference** <br> Explore the full TTS API <br> [Learn more](/api-reference/endpoint/create-tts-stream) | **🔊 Voice Library** <br> Browse available voices <br> [Learn more](/api-reference/endpoint/list-voices) |
+<CardGroup cols={2}>
+  <Card title="Voice Agents" icon="/images/pipecat-orange.svg" href="/tutorials/pipecat">
+    Build real-time voice agents with Pipecat
+  </Card>
+  <Card title="LiveKit Integration" icon="/images/livekit-orange.svg" href="/tutorials/livekit">
+    Create voice agents with LiveKit
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference/endpoint/create-tts-stream">
+    Explore the full TTS API
+  </Card>
+  <Card title="Voice Library" icon="speech" href="/api-reference/endpoint/list-voices">
+    Browse available voices
+  </Card>
+</CardGroup>
+
+---
 
 ## Resources
 

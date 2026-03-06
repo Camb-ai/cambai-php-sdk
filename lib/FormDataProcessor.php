@@ -32,7 +32,7 @@ use DateTime;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\StreamInterface;
 use SplFileObject;
-use Camb\Ai\Model\ModelInterface;
+use \Camb\Ai\Model\ModelInterface;
 
 /**
  * FormDataProcessor Class Doc Comment

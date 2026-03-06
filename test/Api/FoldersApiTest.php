@@ -4,7 +4,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  Camb.ai
+ * @package  Camb\ai
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -25,18 +25,18 @@
  * Please update the test case below to test the endpoint.
  */
 
-namespace Camb.ai\Test\Api;
+namespace Camb\ai\Test\Api;
 
-use \Camb.ai\Configuration;
-use \Camb.ai\ApiException;
-use \Camb.ai\ObjectSerializer;
+use \Camb\ai\Configuration;
+use \Camb\ai\ApiException;
+use \Camb\ai\ObjectSerializer;
 use PHPUnit\Framework\TestCase;
 
 /**
  * FoldersApiTest Class Doc Comment
  *
  * @category Class
- * @package  Camb.ai
+ * @package  Camb\ai
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */

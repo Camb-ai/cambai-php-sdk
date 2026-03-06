@@ -29,7 +29,7 @@
 namespace Camb\Ai;
 
 use GuzzleHttp\Psr7\Utils;
-use Camb\Ai\Model\ModelInterface;
+use \Camb\Ai\Model\ModelInterface;
 
 /**
  * ObjectSerializer Class Doc Comment

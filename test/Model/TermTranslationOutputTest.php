@@ -26,7 +26,7 @@
  * Please update the test case below to test the model.
  */
 
-namespace Camb.ai\Test\Model;
+namespace Camb\Ai\Test\Model;
 
 use PHPUnit\Framework\TestCase;
 

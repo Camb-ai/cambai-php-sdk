@@ -18,18 +18,20 @@ class BasetenTtsProvider implements TtsProviderInterface
 
     public function createTts($payload, $run_id = null)
     {
-        // Mock implementation of calling Baseten
-        // In reality, use Guzzle or curl to POST to basetenUrl
-        
         echo "[BasetenProvider] Calling Baseten API at " . $this->basetenUrl . "\n";
         echo "[BasetenProvider] Payload content: " . $payload->getText() . "\n";
-        
-        // Return a dummy CreateTTSOut object
+
         $out = new CreateTTSOut();
         $out->setTaskId("baseten-task-" . rand(1000, 9999));
-        // Note: run_id might not be strictly settable if it wasn't in constructor or has no setter in generated model,
-        // but let's assume standard behavior or just ignore for mock.
-        
+
         return $out;
+    }
+
+    public function tts($payload)
+    {
+        echo "[BasetenProvider] Calling Baseten Streaming API at " . $this->basetenUrl . "\n";
+
+        // This would typically return a stream or a response object that can be read as a stream
+        return "[BasetenProvider] Simulated Audio Stream";
     }
 }

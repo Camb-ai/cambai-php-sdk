@@ -36,11 +36,11 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Camb\Ai\ApiException;
-use Camb\Ai\Configuration;
-use Camb\Ai\FormDataProcessor;
-use Camb\Ai\HeaderSelector;
-use Camb\Ai\ObjectSerializer;
+use \Camb\Ai\ApiException;
+use \Camb\Ai\Configuration;
+use \Camb\Ai\FormDataProcessor;
+use \Camb\Ai\HeaderSelector;
+use \Camb\Ai\ObjectSerializer;
 
 /**
  * StoryApi Class Doc Comment

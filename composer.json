@@ -1,7 +1,6 @@
 {
     "name": "camb-ai/cambai-php-sdk",
     "description": "Official PHP SDK for Camb.ai",
-    "version": "1.0.1",
     "keywords": [
         "openapitools",
         "openapi-generator",
