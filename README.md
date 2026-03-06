@@ -107,18 +107,25 @@ $payload->setTargetLanguages([Languages::FR_FR]);
 $result = $client->getDubApi()->endToEndDubbingDubPost($payload);
 ```
 
-### 5. Custom Provider (Baseten) support
+### 5. Custom Hosting Provider (Baseten)
 
-You can swap the backend TTS provider while keeping the same interface (e.g. for Baseten).
+You can swap the backend TTS provider while keeping the same SDK interface.
+`reference_audio` can be a public URL or base64-encoded audio file — Baseten caches it for faster inference.
 
 ```php
 require_once 'examples/BasetenTtsProvider.php';
 
-$basetenProvider = new BasetenTtsProvider("baseten_key", "https://model-url...");
+// All four args are required. reference_audio can be a public URL:
+$basetenProvider = new BasetenTtsProvider(
+    getenv('BASETEN_API_KEY'),
+    getenv('BASETEN_URL'),
+    getenv('BASETEN_REFERENCE_AUDIO'), // public URL or base64 audio
+    'en-us'                            // reference audio language
+);
 $client->setTtsProvider($basetenProvider);
 
-// Calls Baseten provider instead of default Camb.ai API
-$client->tts()->createTts($payload);
+// Calls Baseten Mars8-Flash instead of the default Camb.ai API
+$audioStream = $client->tts()->tts($payload);
 ```
 
 ## License
