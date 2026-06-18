@@ -54,6 +54,40 @@ $client = new CambAIClient("YOUR_CAMB_API_KEY");
 
 NOTE: For more examples, refer to the `examples/` directory.
 
+#### Streaming TTS request options
+
+`$client->tts()->tts(...)` accepts the core request fields plus optional controls for model behavior and output format:
+
+| Field | Description |
+| :--- | :--- |
+| `setText(...)` | Text to synthesize. For MARS Instruct, you can include inline emotion or pacing tags. |
+| `setLanguage(...)` | Locale such as `CreateStreamTTSRequestPayload::LANGUAGE_EN_US`. |
+| `setVoiceId(...)` | Voice profile ID from the voice list APIs. |
+| `setSpeechModel(...)` | Model to use, such as `SPEECH_MODEL_MARS_PRO`, `SPEECH_MODEL_MARS_INSTRUCT`, or `SPEECH_MODEL_MARS_FLASH`. |
+| `setUserInstructions(...)` | Adds style, tone, pronunciation, or delivery guidance for the request. Available only with MARS Instruct. |
+| `setOutputConfiguration(...)` | Output settings such as audio format, duration, and enhancement. |
+| `setVoiceSettings(...)` | Voice behavior controls such as reference enhancement or accent preservation. |
+| `setInferenceOptions(...)` | Advanced generation controls for supported models. |
+| `setEnhanceNamedEntitiesPronunciation(...)` | Improves pronunciation for names and other named entities when supported. |
+
+```php
+use Camb\Ai\Model\CreateStreamTTSRequestPayload;
+use Camb\Ai\Model\StreamTTSOutputConfiguration;
+
+$outputConfig = new StreamTTSOutputConfiguration();
+$outputConfig->setFormat('wav');
+
+$payload = new CreateStreamTTSRequestPayload();
+$payload->setText("[warm, friendly] Great to meet you!");
+$payload->setVoiceId(20303);
+$payload->setLanguage(CreateStreamTTSRequestPayload::LANGUAGE_EN_US);
+$payload->setSpeechModel(CreateStreamTTSRequestPayload::SPEECH_MODEL_MARS_INSTRUCT);
+$payload->setUserInstructions("Speak warmly and with enthusiasm.");
+$payload->setOutputConfiguration($outputConfig);
+
+$audioStream = $client->tts()->tts($payload);
+```
+
 ### 1. Text-to-Speech (TTS)
 
 ```php
