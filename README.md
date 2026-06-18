@@ -45,7 +45,7 @@ To use the Camb AI SDK, you'll need an API key.
 ```php
 require_once __DIR__ . '/vendor/autoload.php';
 
-use Camb.ai\CambAIClient;
+use Camb\Ai\CambAIClient;
 
 $client = new CambAIClient("YOUR_CAMB_API_KEY");
 ```
@@ -91,8 +91,8 @@ $audioStream = $client->tts()->tts($payload);
 ### 1. Text-to-Speech (TTS)
 
 ```php
-use Camb.ai\Model\CreateTTSRequestPayload;
-use Camb.ai\Model\Languages;
+use Camb\Ai\Model\CreateTTSRequestPayload;
+use Camb\Ai\Model\Languages;
 
 $payload = new CreateTTSRequestPayload();
 $payload->setText("Hello from Camb AI!");
@@ -106,7 +106,7 @@ echo "Task ID: " . $response->getTaskId();
 ### 2. Text-to-Voice (Generative Voice)
 
 ```php
-use Camb.ai\Model\CreateTextToVoiceRequestPayload;
+use Camb\Ai\Model\CreateTextToVoiceRequestPayload;
 
 $payload = new CreateTextToVoiceRequestPayload();
 $payload->setText("Creating a unique voice.");
@@ -118,7 +118,7 @@ $result = $client->getTextToVoiceApi()->createTextToVoiceTextToVoicePost($payloa
 ### 3. Text-to-Audio (Sound Generation)
 
 ```php
-use Camb.ai\Model\CreateTextToAudioRequestPayload;
+use Camb\Ai\Model\CreateTextToAudioRequestPayload;
 
 $payload = new CreateTextToAudioRequestPayload();
 $payload->setPrompt("A gentle breeze.");
@@ -130,8 +130,8 @@ $result = $client->getTextToAudioApi()->createTextToAudioTextToSoundPost($payloa
 ### 4. End-to-End Dubbing
 
 ```php
-use Camb.ai\Model\EndToEndDubbingRequestPayload;
-use Camb.ai\Model\Languages;
+use Camb\Ai\Model\EndToEndDubbingRequestPayload;
+use Camb\Ai\Model\Languages;
 
 $payload = new EndToEndDubbingRequestPayload();
 $payload->setVideoUrl("https://example.com/video.mp4");
