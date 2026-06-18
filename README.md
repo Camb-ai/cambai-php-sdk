@@ -79,7 +79,7 @@ $outputConfig->setFormat('wav');
 
 $payload = new CreateStreamTTSRequestPayload();
 $payload->setText("[warm, friendly] Great to meet you!");
-$payload->setVoiceId(20303);
+$payload->setVoiceId(147320);
 $payload->setLanguage(CreateStreamTTSRequestPayload::LANGUAGE_EN_US);
 $payload->setSpeechModel(CreateStreamTTSRequestPayload::SPEECH_MODEL_MARS_INSTRUCT);
 $payload->setUserInstructions("Speak warmly and with enthusiasm.");
